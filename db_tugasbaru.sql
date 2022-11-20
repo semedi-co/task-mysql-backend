@@ -165,21 +165,21 @@ CREATE TABLE Coupons(
     updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-DROP TABLE viewhistories;
-DROP TABLE usercourses;
-DROP TABLE achievements;
-DROP TABLE userachievements;
-DROP TABLE wishlists;
-DROP TABLE videos;
-DROP TABLE courses;
-DROP TABLE users;
-DROP TABLE comments;
-DROP TABLE articles;
-DROP TABLE articlelikes;
-DROP TABLE coursetopics;
-DROP TABLE carts;
-DROP TABLE testimonies;
-DROP TABLE coupons;
-DROP TABLE topics;
+-- DROP TABLE viewhistories;
+-- DROP TABLE usercourses;
+-- DROP TABLE achievements;
+-- DROP TABLE userachievements;
+-- DROP TABLE wishlists;
+-- DROP TABLE videos;
+-- DROP TABLE courses;
+-- DROP TABLE users;
+-- DROP TABLE comments;
+-- DROP TABLE articles;
+-- DROP TABLE articlelikes;
+-- DROP TABLE coursetopics;
+-- DROP TABLE carts;
+-- DROP TABLE testimonies;
+-- DROP TABLE coupons;
+-- DROP TABLE topics;
 
 
