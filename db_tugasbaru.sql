@@ -1,0 +1,185 @@
+-- Active: 1668829782324@@127.0.0.1@3306@db_tugas
+CREATE DATABASE db_tugas;
+
+USE db_tugas;
+
+CREATE TABLE ViewHistories(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL, 
+    videoId INT NOT NULL,
+    isCompleted ENUM('0','1') NOT NULL,
+    CONSTRAINT fk_ViewHistories1 FOREIGN KEY (userId) REFERENCES Users(id),    
+    CONSTRAINT fk_ViewHistories2 FOREIGN KEY (videoId) REFERENCES Videos(id),    
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE UserCourses(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    courseId INT NOT NULL,    
+    userId INT NOT NULL,
+    CONSTRAINT fk_UserCourses1 FOREIGN KEY (courseId) REFERENCES Courses(id),    
+    CONSTRAINT fk_UserCourses2 FOREIGN KEY (userId) REFERENCES Users(id)
+);
+ 
+CREATE TABLE Achievements(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(225) NOT NULL, 
+    image VARCHAR(225) NOT NULL,
+    isActive ENUM('1','2') NOT NULL,    
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE UserAchievements(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL, 
+    achiveId INT NOT NULL,
+    CONSTRAINT fk_UserAchievements1 FOREIGN KEY (achiveId) REFERENCES Achievements(id),
+    CONSTRAINT fk_UserAchievements2 FOREIGN KEY (userId) REFERENCES Users(id),      
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Wishlists(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    courseId INT NOT NULL, 
+    userId INT NOT NULL,
+    CONSTRAINT fk_Wishlists1 FOREIGN KEY (courseId) REFERENCES Courses(id),
+    CONSTRAINT fk_Wishlists2 FOREIGN KEY (userId) REFERENCES Users(id),
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Videos(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    courseId INT NOT NULL, 
+    title VARCHAR(225) NOT NULL,
+    duration VARCHAR(225) NOT NULL,
+    status ENUM('0','1') NOT NULL,
+    url VARCHAR(225) NOT NULL,          
+    CONSTRAINT fk_Videos FOREIGN KEY (courseId) REFERENCES Courses(id),
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Courses(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,     
+    title VARCHAR(225) NOT NULL,
+    slug VARCHAR(200) NOT NULL,
+    price INT NOT NULL,
+    description TEXT,
+    thumbnail VARCHAR(225) NOT NULL,
+    totalDuration VARCHAR(225) NOT NULL,    
+    status ENUM('0','1') NOT NULL,
+    totalVideo INT NOT NULL,        
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Users(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,     
+    name VARCHAR(225) NOT NULL, 
+    email VARCHAR(225) NOT NULL, 
+    password VARCHAR(225) NOT NULL, 
+    role ENUM('0','1') NOT NULL, 
+    isActive ENUM('0','1') NOT NULL, 
+    twitter VARCHAR(225) NOT NULL,  
+    facebook VARCHAR(225) NOT NULL, 
+    instagram VARCHAR(225) NOT NULL, 
+    github VARCHAR(225) NOT NULL,     
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Comments(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,     
+    articleId INT NOT NULL, 
+    userId INT NOT NULL,
+    replyId INT NOT NULL,
+    comment TEXT,    
+    CONSTRAINT fk_Comments1 FOREIGN KEY (articleId) REFERENCES Articles(id),
+    CONSTRAINT fk_Comments2 FOREIGN KEY (userId) REFERENCES Users(id),    
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Testimonies(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,     
+    courseId INT NOT NULL, 
+    userId INT NOT NULL,
+    content TEXT,    
+    CONSTRAINT fk_Testimonies1 FOREIGN KEY (courseId) REFERENCES Courses(id),
+    CONSTRAINT fk_Testimonies2 FOREIGN KEY (userId) REFERENCES Users(id),
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Carts(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,     
+    courseId INT NOT NULL, 
+    userId INT NOT NULL,
+    couponId INT NOT NULL,    
+    CONSTRAINT fk_Carts1 FOREIGN KEY (courseId) REFERENCES Courses(id),    
+    CONSTRAINT fk_Carts2 FOREIGN KEY (userId) REFERENCES Users(id),    
+    CONSTRAINT fk_Carts3 FOREIGN KEY (couponId) REFERENCES Coupons(id),    
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE CourseTopics(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,     
+    courseId INT NOT NULL, 
+    topicId INT NOT NULL,    
+    CONSTRAINT fk_CourseTopics1 FOREIGN KEY (courseId) REFERENCES Courses(id),   
+    CONSTRAINT fk_CourseTopics2 FOREIGN KEY (topicId) REFERENCES Topics(id),       
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE ArticleLikes(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    articleId INT NOT NULL,    
+    userId INT NOT NULL, 
+    CONSTRAINT fk_ArticleLikes1 FOREIGN KEY (articleId) REFERENCES Articles(id),       
+    CONSTRAINT fk_ArticleLikes2 FOREIGN KEY (userId) REFERENCES Users(id),       
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Articles(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    userId INT NOT NULL, 
+    slug VARCHAR(220) NOT NULL,
+    title VARCHAR(225) NOT NULL,
+    date DATETIME NOT NULL,
+    thumbnail VARCHAR(225) NOT NULL,
+    content TEXT,    
+    CONSTRAINT fk_Articles FOREIGN KEY (userId) REFERENCES Users(id),       
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Topics(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(225) NOT NULL,
+    isActive ENUM('0','1') NOT NULL,    
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE Coupons(
+    id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+    name VARCHAR(225) NOT NULL,
+    discount INT NOT NULL,    
+    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TABLE viewhistories;
+DROP TABLE usercourses;
+DROP TABLE achievements;
+DROP TABLE userachievements;
+DROP TABLE wishlists;
+DROP TABLE videos;
+DROP TABLE courses;
+DROP TABLE users;
+DROP TABLE comments;
+DROP TABLE articles;
+DROP TABLE articlelikes;
+DROP TABLE coursetopics;
+DROP TABLE carts;
+DROP TABLE testimonies;
+DROP TABLE coupons;
+DROP TABLE topics;
+
+
